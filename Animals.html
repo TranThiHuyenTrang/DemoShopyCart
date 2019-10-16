@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animals</title>
+	<style type="text/css">
+		.flex{
+			margin-top: 10px;
+			display: flex;
+			justify-content: space-between;
+			width: 500px;
+			border: 2px solid red;
+			border-radius: 2px;
+		}
+		.button{
+			margin-top: 10px;
+			background-color: lightblue;
+			width: 70px;
+		}
+		.img{
+			width: 50px;
+			height: 50px;
+		}
+		.butlist{
+			background-color: orange;
+			width: 100px;
+			margin-top: 20px;
+			height: 50px;
+		}
+		.header{
+			display: flex;
+			justify-content: space-between;
+			width: 500px;
+		}
+	</style>
+	
+</head>
+<center>
+<body onload="displayItems();displayCart();">
+	<div class="header">
+		<h1 style="color: purple;">LIST ANIMALS</h1>
+		<button class="butlist" onclick="home()">HOME</button>
+		<button class="butlist" onclick="load()">LIST FAVORITE</button>
+	</div>
+	<div id="container"></div>
+	</div>
+	<hr style="width: 700px">
+	<h1 style="color: purple;">LIST FAVORITE</h1>
+	<div id="container2"></div>
+	<hr style="width: 700px">
+	<div style="display: flex;align-items: center;justify-content: space-around;">
+		<!-- <textarea id="summ"></textarea> -->
+		<p style="color: red;font-size: 30px;">SUM</p>
+		<h2 id="summ"></h2>
+		<br><p style="color:red;font-size: 30px;">QUANTITY</p>
+		<h2 id="countt"></h2>
+	</div>
+</center>
+	<script type="text/javascript">
+		var item1 = {name:"Dog",price:20000,img :"dog.jfif"}
+		var item2 = {name:"Cat",price:5000,img:"cat.jfif"}
+		var item3 = {name:"Pig",price:7000,img:"conlon.jfif"}
+		var item4 = {name:"Bee",price:40000,img:"bee.jfif"}
+		var item5 = {name:"Bee",price:90000,img:"bee.jfif"}
+		var item6 = {name:"Wolf",price:80000,img:"soi.jfif"}
+
+
+		var items = [item1,item2,item3,item4,item5,item6];
+		var cart = [];
+		function displayItems(){
+			var box = document.getElementById("container");
+			for (var i = 0; i <items.length; i++) {
+				var flex = document.createElement("div");
+				flex.className = "flex";
+				var paraImg = document.createElement("img");
+				var paraName = document.createElement("h3");
+				var paraPrice = document.createElement("h3");
+				var paraButton = document.createElement("button");
+				paraButton.className = "button";
+				paraImg.className = "img";
+
+				paraImg.src= items[i].img;
+				paraName.innerHTML = items[i].name;
+				paraPrice.innerHTML = items[i].price;
+				paraButton.innerHTML = "ADD";
+
+				paraButton.onclick = function(ar){
+					return function(){
+					alert("Đã thêm vào danh sách yêu thích")
+					cart.push(items[ar]);
+					console.log(cart);
+					SumAndCount();
+					document.getElementById("container2").innerHTML = ' ';	
+				}
+				
+			}(i);
+				flex.appendChild(paraImg);
+				flex.appendChild(paraName);
+				flex.appendChild(paraPrice);
+				flex.appendChild(paraButton);
+				box.appendChild(flex);
+			}
+		}
+		
+		function displayCart(){
+			var box2 = document.getElementById("container2");
+			for (var i = 0; i < cart.length; i++) {
+				var flex = document.createElement("div");
+				flex.className = "flex";
+				var paraName1 = document.createElement("h3");
+				var paraButton1 = document.createElement("button");
+				paraButton1.className = "button";
+				var paraImg1 = document.createElement("img");
+				paraImg1.className="img";
+
+
+				paraImg1.src = cart[i].img;
+				paraName1.innerHTML = cart[i].name;
+				paraButton1.innerHTML = "DELETE";
+				paraButton1.onclick = function(br){
+						return function(){
+							 cart.splice(br,1);
+							 console.log(cart);
+							 document.getElementById("container2").innerHTML = ' ';	
+							 displayCart();
+							 SumAndCount();
+							 } 
+					}(i);
+				flex.appendChild(paraImg1);
+				flex.appendChild(paraName1);
+				flex.appendChild(paraButton1);
+				box2.appendChild(flex);
+			}					
+		}
+
+
+		function SumAndCount() {
+            var sum = 0;
+            var count = 0;
+            for (var k = 0; k < cart.length; k++) {
+                count++;
+                sum += cart[k].price;
+            }
+            document.getElementById("summ").innerHTML = sum;
+            document.getElementById("countt").innerHTML = count;
+        }
+        displayProduct();
+        displayCart();
+
+         function load() {
+                displayCart();
+                SumAndCount();
+                var a = document.getElementById('container');
+                a.style.display="none";
+                var b = document.getElementById('container2');
+                b.style.display = "block";
+            }
+        function home(){
+        	alert("Bạn chắc chắn muốn quay lại trang chủ không?");
+        	var c = document.getElementById('container');
+            c.style.display="block";
+            var d = document.getElementById('container2');
+            d.style.display = "none";
+        }
+	</script>
+</body>
+</html>
+
